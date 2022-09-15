@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static '/Css/Landingpage.css' %}" />
+    <link
+      rel="shortcut icon"
+      href="{% static '/Images/Fav.png' %}"
+      type="image/x-icon"
+    />
+
+    <link rel="stylesheet" href="{% static '/Css/Home.css' %}" />
+    <title>We Blog | Update</title>
+  </head>
+  <body>
+    <header>
+      <a href="/"><span>We Blog</span></a>
+
+      <ul>
+        <a href="{% url 'Bloghome' %}">
+          <li>Home</li>
+        </a>
+        <a href="{% url 'Profile' %}">
+          <li>Profile</li>
+        </a>
+        <a href="{% url 'Logout' %}">
+          <li>Logout</li>
+        </a>
+      </ul>
+    </header>
+    {% for i in articledata %}
+    <div class="Main">
+      <form
+        class="updatearticle"
+        action="{% url 'Updatepost' i.id%}"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        {% csrf_token %}
+        <h2>Updating article</h2>
+        <p class="success">{{message}}</p>
+        <label for="title">Title</label>
+        <input
+          type="text"
+          id="title"
+          required
+          minlength="20"
+          maxlength="100"
+          name="Posttitle"
+          placeholder="Should be between 10 to 30 words"
+          value="{{i.title}}"
+        />
+        <label for="desc">Description</label>
+        <textarea
+          id="desc"
+          required
+          cols="60vw"
+          name="Postdes"
+          rows="12"
+          maxlength="1000"
+          placeholder="Maximum 1000 characters"
+        >{{i.desc}}</textarea
+        >
+        <label for="Image">Image</label>
+        <input type="file" name="Pic" multiple id="Image" />
+        <p>You created this article on {{i.date | date:"j/m/y"}}</p>
+        <button type="submit">Update</button>
+        <a href="{% url 'Myarticles' %}"
+          ><button type="button">Cancel</button></a
+        >
+      </form>
+    </div>
+    {% endfor %}
+  </body>
+</html>

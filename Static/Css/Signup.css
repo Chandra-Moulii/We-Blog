@@ -1,0 +1,72 @@
+a {
+  color: rebeccapurple;
+}
+a:hover {
+  color: rgb(71, 37, 106);
+}
+header span {
+  display: inline;
+  color: var(--para-dark);
+}
+span {
+  display: none;
+  color: #e83c3c;
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0.5rem;
+}
+h1 {
+  font-weight: lighter;
+  margin: 2rem var(--horizantal-padding);
+  color: var(--primary-clr-800);
+}
+form input:not(:focus):not(:placeholder-shown):invalid {
+  animation: shake 0.2s;
+  box-shadow: 0 0 2px 2px #e83c3c;
+}
+form input:not(:focus):not(:placeholder-shown):valid {
+  box-shadow: 0 0 2px 2px #48b043;
+}
+.Hint {
+  color: red;
+  display: none;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+form input:not(:focus):not(:placeholder-shown):invalid +p{
+  display: block;
+}
+@keyframes shake {
+  0%,
+  100% {
+    transform: translatex(0px);
+  }
+  20%,
+  80% {
+    transform: translatex(5px);
+  }
+  40%,
+  60% {
+    transform: translatex(-5px);
+  }
+}
+.Signup {
+  gap: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 var(--horizantal-padding);
+  justify-content: space-between;
+}
+
+.Signup svg {
+  width: 25rem;
+}
+@media screen and (max-width: 500px) {
+  :root {
+    --horizantal-padding: 2rem;
+  }
+  .Signup svg {
+    width: 15rem;
+  }
+}

@@ -1,0 +1,187 @@
+:root {
+  --radius: 0.3rem;
+  --input: #ededed;
+  --para-light: #595959;
+  --para-dark: #000000;
+  --ff: montserrat medium;
+  --header-light: #242424;
+  --horizantal-padding: 10rem;
+  --primary-clr-800: #628394;
+  --primary-clr-400: #c4d7e0;
+}
+
+/* Basic reset */
+* {
+  margin: 0;
+  padding: 0;
+  font-family: var(--ff);
+  text-decoration: none;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  border-radius: var(--radius);
+}
+
+::placeholder {
+  color: #a7a7a7;
+}
+
+/* Header & Navigation */
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 0;
+  max-height: 4rem;
+  align-items: center;
+  padding: 1rem var(--horizantal-padding);
+  background-color: var(--primary-clr-400);
+}
+header a {
+  cursor: pointer;
+  color: var(--para-dark);
+}
+header img {
+  top: 0.2rem;
+  width: 2rem;
+  height: 2rem;
+  object-fit: cover;
+  position: relative;
+  border-radius: 50%;
+}
+
+header a:hover {
+  color: var(--para-d);
+}
+
+header span {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+ul {
+  gap: 2rem;
+  display: flex;
+  font-size: 1rem;
+  list-style: none;
+  margin-left: auto;
+  place-items: center;
+}
+
+/* Hero Section */
+
+.hero {
+  gap: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin: 6rem var(--horizantal-padding);
+}
+.hero h1 {
+  font-size: 3.5rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  color: var(--primary-clr-800);
+}
+.hero .sub {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--para-light);
+}
+form input {
+  width: 30ch;
+  border: none;
+  outline: none;
+  display: block;
+  font-size: 1rem;
+  padding: 0.7rem;
+  margin: 0.7rem 0;
+  border-radius: var(--radius);
+  background-color: var(--input);
+}
+form input:focus {
+  outline: none;
+  box-shadow: 0 0 2px 2px var(--primary-clr-800);
+}
+
+form input:hover {
+  outline: 2px solid var(--primary-clr-800);
+}
+
+textarea:hover {
+  outline: 2px solid var(--primary-clr-800);
+}
+form button {
+  width: 30ch;
+  border: none;
+  margin-top: 0;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: var(--radius);
+  background-color: var(--primary-clr-400);
+}
+form label {
+  font-size: 1.1rem;
+}
+form button:hover {
+  color: white;
+  background-color: var(--primary-clr-800);
+}
+
+form button:focus {
+  outline: none;
+  color: white;
+  background-color: var(--primary-clr-800);
+}
+form p {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+}
+.Error {
+  color: #e74545;
+  font-size: 0.9rem;
+  margin-bottom: 0.8rem;
+}
+.hero svg {
+  width: 25rem;
+}
+
+.Show {
+  cursor: pointer;
+  margin-top: 0;
+  font-size: 0.85rem;
+}
+
+@media screen and (max-width: 800px) {
+  :root {
+    --horizantal-padding: 3rem;
+  }
+
+  .hero {
+    margin: 2rem var(--horizantal-padding);
+  }
+  .hero h1 {
+    font-size: 3rem;
+  }
+  .hero svg {
+    width: 20rem;
+    display: none;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+  .hero .sub {
+    font-size: 1.5rem;
+  }
+  form input {
+    width: 25ch;
+  }
+  form button {
+    width: 25ch;
+  }
+}

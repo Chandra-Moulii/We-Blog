@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static '/Css/Landingpage.css' %}" />
+    <link rel="shortcut icon" href="{% static '/Images/Fav.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static '/Css/Home.css' %}" />
+    <link rel="stylesheet" href="{% static '/Css/Details.css' %}" />
+    <script src="{% static '/js/Home.js' %}"></script>
+    <title>We Blog | Details</title>
+  </head>
+  <body>
+    <header>
+      <a href="/"><span>We Blog</span></a>
+      <ul>
+        <a class="nohover" href="{% url 'Profile' %}"
+        ><img src="{{user.profile.pic.url}}" alt="Profile"
+      /></a>
+        <a href="{% url 'Bloghome' %}">
+          <li>Home</li>
+        </a>
+      </ul>
+    </header>
+    <div class="Main">
+      <h1>Details</h1>
+      <a class="Back" href="{% url 'Bloghome' %}"><button>Back</button></a>
+      <p class="detail">This article was created by {{Article.user}} on {{Article.date | date:"j/m/y"}} at {{Article.date | time}}</p class="detail">
+      <div class="Article">
+        <section>
+          <p class="title" id="title-{{Article.id}}">
+            <b>{{Article.title}}&nbsp;</b>
+            <svg
+              class="share"
+              id="http://127.0.0.1:8000/Detail/{{Article.id}}"
+              onclick="Copy(this)"
+              width="17"
+              height="18"
+              viewBox="0 0 17 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 9C0 10.654 1.346 12 3 12C3.794 12 4.512 11.685 5.049 11.18L11.04 14.604C11.022 14.734 11 14.864 11 15C11 16.654 12.346 18 14 18C15.654 18 17 16.654 17 15C17 13.346 15.654 12 14 12C13.206 12 12.488 12.315 11.951 12.82L5.96 9.397C5.978 9.266 6 9.136 6 9C6 8.864 5.978 8.734 5.96 8.603L11.951 5.18C12.488 5.685 13.206 6 14 6C15.654 6 17 4.654 17 3C17 1.346 15.654 0 14 0C12.346 0 11 1.346 11 3C11 3.136 11.022 3.266 11.04 3.397L5.049 6.82C4.496 6.29468 3.76273 6.00123 3 6C1.346 6 0 7.346 0 9Z"
+                fill="#7D7D7D"
+              />
+            </svg>
+          </p>
+          <a href="{% url 'Authorpage' Article.user.id %}">
+            <img src="{{Article.user.profile.pic.url}}" alt="Profilepic" />
+          </a>
+        </section>
+        <div class="desc">
+          <p>{{Article.desc}}</p>
+          {% if Article.pic %}
+          <img src="{{Article.pic.url}}" alt="pic" />
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

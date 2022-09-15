@@ -1,0 +1,366 @@
+header {
+  border-radius: 0px;
+  position: sticky;
+  top: 0;
+}
+.Main {
+  margin: 0 var(--horizantal-padding);
+}
+hr {
+  height: 1px;
+  margin: 1rem 0;
+  border-width: 0;
+  background-color: #cccccc;
+}
+
+textarea:focus {
+  box-shadow: 0 0 2px 2px var(--primary-clr-800);
+}
+h1 {
+  font-weight: lighter;
+  color: var(--primary-clr-800);
+  font-size: 1.5rem;
+}
+button:hover {
+  background-color: var(--primary-clr-400);
+}
+.Welcome {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+.Create {
+  border: none;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--primary-clr-400);
+}
+
+.Articlecontainer {
+  gap: 5rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+.Articlecontainer h2 {
+  font-weight: normal;
+}
+.Articlecontainer button {
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  align-items: center;
+  border-radius: var(--radius);
+  padding: 0.5rem 1rem;
+}
+
+.Articleheader {
+  gap: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+.Search input {
+  padding: 0.5rem;
+}
+.Article {
+  width: 50vw;
+  margin: 1rem 0;
+  box-shadow: 0px 4px 4px 0px #e5e5e5;
+}
+.Article svg:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+.Article span {
+  font-size: 0.9rem;
+  padding: 0.3rem 0.5rem;
+  line-height: normal;
+  margin-left: 1rem;
+  color: white;
+  background-color: #646464;
+}
+.Article section {
+  display: flex;
+  gap: 2rem;
+  line-height: 1.5rem;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  justify-content: space-between;
+  border-radius: 0.3rem 0.3rem 0 0;
+  background-color: #e5e5e5;
+}
+.Article section img {
+  width: 2rem;
+  height: 2rem;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.Edit {
+  position: absolute;
+  margin: 0.1rem 0.5rem;
+}
+.Articlecontainer .Article .desc {
+  padding: 0.5rem 1rem;
+  max-height: 26vh;
+  overflow: hidden;
+  line-height: 1.5rem;
+}
+summary {
+  cursor: pointer;
+}
+.Articlecontainer .Article .Articlefooter {
+  width: 100%;
+  border-radius: 0;
+  padding: 1rem;
+  padding-top: 0.5rem;
+  /* background-color: grey; */
+}
+.Articlecontainer .Article .desc img {
+  width: 3rem;
+  margin: 0.3rem 0;
+  height: 2rem;
+  object-fit: cover;
+}
+.Otherside hr {
+  margin: 0.5rem 0;
+}
+.Otherside a {
+  color: var(--primary-clr-800);
+}
+.Otherside a:hover {
+  color: var(--header-light);
+}
+.Otherside p {
+  max-width: 19rem;
+}
+
+.Likes {
+  cursor: pointer;
+  font-size: 0.8rem;
+  display: inline-block;
+  margin: .2rem 0;
+  padding: 0 0.3rem;
+  background-color: lightgrey;
+}
+.Likes:hover > p {
+  scale: 1.2;
+}
+.createarticle {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+  padding: 1rem 1.5rem;
+  background-color: #d3dde2;
+}
+input[type="file"]::file-selector-button {
+  border: none;
+  font-size: 0.9rem;
+  font-family: var(--ff);
+  color: var(--para-light);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius);
+  background-color: #dedede;
+}
+input[type="file"]::file-selector-button:hover {
+  outline: 1px solid var(--primary-clr-800);
+}
+.createarticleactive {
+  opacity: 1;
+  pointer-events: all;
+}
+.createarticle p {
+  margin: 1rem 0;
+  font-size: 1.5rem;
+}
+.createarticle .Hint {
+  margin: 0;
+  font-size: 0.9rem;
+}
+.createarticle input,
+textarea {
+  width: 50ch;
+  resize: none;
+  border: none;
+  outline: none;
+  display: block;
+  font-size: 1rem;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  background-color: white;
+}
+
+.createarticle svg {
+  position: relative;
+  left: 97%;
+  width: 1rem;
+  cursor: pointer;
+}
+.Create {
+  background-color: var(--primary-clr-400);
+}
+.createarticle button {
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  border-radius: var(--radius);
+  padding: 0.5rem;
+  background-color: #7a97a3;
+}
+.title {
+  font-size: 1.1rem;
+  line-height: 2rem;
+}
+.Share {
+  display: flex;
+  gap: 1rem;
+  place-items: center;
+}
+.delete {
+  left: 50%;
+  top: 50%;
+  opacity: 0;
+  z-index: 12;
+  width: 30rem;
+  color: white;
+  position: absolute;
+  padding: 1rem 2rem;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  background-color: #e67c7c;
+}
+.delete p {
+  margin: 0.7rem 0;
+}
+.delete span {
+  font-size: 1.5rem;
+}
+.delete button {
+  margin-right: 1rem;
+  background-color: white;
+}
+.delactive {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.updatearticle label {
+  display: block;
+  margin: 0rem 0;
+  margin-top: 0.7rem;
+}
+.updatearticle input {
+  resize: none;
+  width: 50ch;
+  border: none;
+  display: block;
+  font-size: 1rem;
+  padding: 0.7rem;
+  margin: 0.5rem 0;
+}
+.updatearticle h2 {
+  font-weight: 100;
+  color: var(--primary-clr-800);
+  margin: 2rem 0;
+}
+.updatearticle textarea {
+  padding: 0.5rem;
+  background-color: var(--input);
+  margin: 0.5rem 0;
+}
+.updatearticle button {
+  display: block;
+  justify-content: flex-start;
+  width: 7rem;
+  margin: 1rem 0;
+}
+.updatearticle p {
+  font-size: 0.9rem;
+  margin: 1rem 0;
+}
+
+.Otherside details li {
+  margin: 0.5rem 1.2rem;
+  color: var(--primary-clr-800);
+}
+
+.Totop {
+  position: sticky;
+  cursor: pointer;
+  display: none;
+  bottom: 3rem;
+  left: 100%;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  animation: bubble 2s infinite;
+  animation-duration: alternate;
+  background-color: var(--primary-clr-400);
+}
+
+.Totop:hover {
+  animation-play-state: paused;
+}
+
+
+@keyframes bubble {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+@media screen and (max-width: 1100px) {
+  .Article {
+    width: 70vw;
+  }
+  .Articlecontainer {
+    gap: 2rem;
+    display: flex;
+  }
+  .Articleheader {
+    gap: 1rem;
+  }
+}
+.Message {
+  font-size: 0.9rem;
+}
+@media screen and (max-width: 800px) {
+  .Article {
+    width: 85vw;
+  }
+  .createarticle {
+    width: 80vw;
+  }
+  .createarticle input,
+  textarea {
+    width: 95%;
+  }
+  .delete {
+    width: 70vw;
+  }
+  .delete button {
+    margin: 0.3rem 0;
+  }
+}
+@media screen and (max-width: 500px) {
+  :root {
+    --horizantal-padding: 2rem;
+  }
+  .Articleheader {
+    gap: 0.5rem;
+  }
+  .Article {
+    width: 80vw;
+  }
+  ul {
+    gap: 1rem;
+  }
+}

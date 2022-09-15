@@ -1,0 +1,230 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static '/Css/Landingpage.css' %}" />
+    <link rel="stylesheet" href="{% static '/Css/Home.css' %}" />
+    <link
+      rel="shortcut icon"
+      href="{% static '/Images/Fav.png' %}"
+      type="image/x-icon"
+    />
+    <script src="{% static '/gsap.min.js' %}"></script>
+    <script src="{% static '/js/Home.js' %}"></script>
+    <title>We Blog | Home</title>
+  </head>
+  <body>
+    <header id="Top">
+      <a href="/"><span>We Blog</span></a>
+      <ul>
+        <a class="nohover" href="{% url 'Profile' %}"
+          ><img src="{{user.profile.pic.url}}" alt="Profile"
+        /></a>
+        <a href="{% url 'Logout' %}">
+          <li>Logout</li>
+        </a>
+      </ul>
+    </header>
+    <div class="Main">
+      <div class="Welcome">
+        {% if Time > 0 and Time < 12 %}
+        <h1>Good morning {{user.username}}</h1>
+        {% elif Time > 12 and Time < 18 %}
+        <h1>Good afternoon {{user.username}}</h1>
+        {% else %}
+        <h1>Good evening {{user.username}}</h1>
+        {% endif %}
+      </div>
+      <div class="Articlecontainer">
+        <div class="oneside">
+          <div class="Articleheader">
+            <!-- <h2>Articles({{Articles.count}})</h2> -->
+            <button class="Create" type="button" onclick="createarticle()">
+              Create Article
+            </button>
+            <form action="{% url 'Search' %}" method="POST" class="Search">
+              {% csrf_token %}
+              <input
+                type="text"
+                name="search"
+                id="search"
+                placeholder="Search articles by title"
+              />
+            </form>
+            <a href="{% url 'Myarticles' %}"><button>My Articles</button></a>
+            <a href="{% url 'Sort' %}"><button type="button">Sort</button></a>
+          </div>
+          <hr />
+          <p class="Message">
+            {{Message}} <a href="{% url 'Bloghome' %}">{{Click}}</a>
+          </p>
+          {% if Articles%} {% for i in Articles %}
+          <div class="Article">
+            <section>
+              <p class="title" id="title-{{i.id}}">
+                <b>{{i.title}}</b
+                ><small> -- ({{i.date | date:"j/m/y"}}) &nbsp;</small>
+                <svg
+                  class="share"
+                  id="http://127.0.0.1:8000/Detail/{{i.id}}"
+                  onclick="Copy(this)"
+                  width="17"
+                  height="18"
+                  viewBox="0 0 17 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 9C0 10.654 1.346 12 3 12C3.794 12 4.512 11.685 5.049 11.18L11.04 14.604C11.022 14.734 11 14.864 11 15C11 16.654 12.346 18 14 18C15.654 18 17 16.654 17 15C17 13.346 15.654 12 14 12C13.206 12 12.488 12.315 11.951 12.82L5.96 9.397C5.978 9.266 6 9.136 6 9C6 8.864 5.978 8.734 5.96 8.603L11.951 5.18C12.488 5.685 13.206 6 14 6C15.654 6 17 4.654 17 3C17 1.346 15.654 0 14 0C12.346 0 11 1.346 11 3C11 3.136 11.022 3.266 11.04 3.397L5.049 6.82C4.496 6.29468 3.76273 6.00123 3 6C1.346 6 0 7.346 0 9Z"
+                    fill="#7D7D7D"
+                  />
+                </svg>
+              </p>
+              <a href="{% url 'Authorpage' i.user.id %}">
+                <img src="{{i.user.profile.pic.url}}" alt="Profilepic" />
+              </a>
+            </section>
+            <div class="desc">
+              <p>{{i.desc}}</p>
+              {% if i.pic %}
+              <img src="{{i.pic.url}}" alt="pic" />
+              {% endif %}
+              <div class="Likes">
+                <a href="{ url 'like' i.id }">
+                  <p>💖 </p>
+                </a>
+              </div>
+            </div>
+            {% if i.desc|length > 300 or i.pic %}
+            <div class="Articlefooter">
+              <p>
+                <a href="{% url 'Detail' i.id %}">Show full article</a>
+              </p>
+            </div>
+            {% endif %}
+          </div>
+          {% endfor %} {% else %}
+          <br />
+          <p>No articles here🥲</p>
+          {% endif %}
+        </div>
+        <div class="Otherside">
+          <h2>Stats</h2>
+          <br />
+          <br />
+          <details>
+            <summary>Author's ({{Authors.count}})</summary>
+            <hr />
+            <span>Author's Name</span>
+            <ol>
+              {% for i in Authors %}
+              <li>
+                <a href="{% url 'Authorpage' i.id %}">
+                  <p>{{i}}</p>
+                </a>
+              </li>
+              {% endfor %}
+            </ol>
+          </details>
+          <br />
+          <details>
+            <summary>Total Articles created ({{Allarticles.count}})</summary>
+            <hr />
+            <span>Article title</span>
+            <ol>
+              {% for i in Allarticles %}
+              <li>
+                <p>
+                  <a href="{% url 'Detail' i.id %}">{{i.title}}</a>
+                </p>
+              </li>
+              {% endfor %}
+            </ol>
+          </details>
+          <br />
+          <details>
+            <summary>Total articles you created ({{Myarticles.count}})</summary>
+            <hr />
+            <span>Article title</span>
+            <ol>
+              {% for i in Myarticles %}
+              <li>
+                <p>
+                  <a href="{% url 'Detail' i.id %}">{{i.title}}</a>
+                </p>
+              </li>
+              {% endfor %}
+            </ol>
+          </details>
+        </div>
+      </div>
+      <div class="createarticle">
+        <svg
+          onclick="closee()"
+          class="close"
+          viewBox="0 0 40 40"
+          fill="#000000"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M1.1182 1.1182C1.8344 0.402216 2.80564 0 3.81835 0C4.83105 0 5.8023 0.402216 6.5185 1.1182L20.0231 14.6228L33.5276 1.1182C34.2479 0.422508 35.2127 0.0375575 36.214 0.0462592C37.2154 0.0549608 38.1733 0.456618 38.8814 1.16472C39.5895 1.87283 39.9912 2.83072 39.9999 3.83209C40.0086 4.83346 39.6236 5.79819 38.9279 6.5185L25.4234 20.0231L38.9279 33.5276C39.6236 34.2479 40.0086 35.2127 39.9999 36.214C39.9912 37.2154 39.5895 38.1733 38.8814 38.8814C38.1733 39.5895 37.2154 39.9912 36.214 39.9999C35.2127 40.0086 34.2479 39.6236 33.5276 38.9279L20.0231 25.4234L6.5185 38.9279C5.79819 39.6236 4.83346 40.0086 3.83209 39.9999C2.83072 39.9912 1.87283 39.5895 1.16472 38.8814C0.456618 38.1733 0.0549608 37.2154 0.0462592 36.214C0.0375575 35.2127 0.422508 34.2479 1.1182 33.5276L14.6228 20.0231L1.1182 6.5185C0.402216 5.8023 0 4.83105 0 3.81835C0 2.80564 0.402216 1.8344 1.1182 1.1182Z"
+            fill="#00000"
+          />
+        </svg>
+        <p>Creating an Article</p>
+        <form
+          action="{% url 'Createpost' %}"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          {% csrf_token %}
+          <label for="title">Title</label>
+          <input
+            id="title"
+            type="text"
+            minlength="20"
+            maxlength="100"
+            name="Posttitle"
+            required
+            placeholder="Should be between 10 to 30 words"
+          />
+          <label for="desc">Description</label>
+          <textarea
+            id="desc"
+            cols="60vw"
+            name="Postdes"
+            rows="5"
+            maxlength="1000"
+            required
+            placeholder="Maximum 1000 characters"
+          ></textarea>
+          <label for="pic">Attach a photo</label>
+          <input type="file" name="Pic" id="pic" />
+          <p class="Hint">You can attach only 1 image</p>
+          <br />
+          <button type="submit">Post</button>
+        </form>
+      </div>
+      <a class="Totop" title="Back to top" href="#Top">
+        <svg
+          width="16"
+          height="18"
+          viewBox="0 0 16 18"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M8 17V1M1 8L8 1L15 8"
+            stroke="#363636"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </a>
+    </div>
+  </body>
+</html>

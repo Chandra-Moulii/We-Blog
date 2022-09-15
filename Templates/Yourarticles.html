@@ -1,0 +1,219 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static '/Css/Landingpage.css' %}" />
+    <link
+      rel="shortcut icon"
+      href="{% static '/Images/Fav.png' %}"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="{% static '/Css/Home.css' %}" />
+    <script src="{% static 'js/Myarticles.js' %}"></script>
+    <title>We Blog | Myarticles</title>
+  </head>
+  <body>
+    <header>
+      <a href="/"><span>We Blog</span></a>
+      <ul>
+        <a class="nohover" href="{% url 'Profile' %}"
+          ><img src="{{user.profile.pic.url}}" alt="Profile"
+        /></a>
+        <a href="{% url 'Bloghome' %}">
+          <li>Home</li>
+        </a>
+        <a href="{% url 'Logout' %}">
+          <li>Logout</li>
+        </a>
+      </ul>
+    </header>
+    <div class="Main">
+      <div class="Welcome">
+        <h1>Your Articles({{Article.count}})</h1>
+        <br />
+      </div>
+      <div class="Articlecontainer">
+        <div class="oneside">
+          <div class="Articleheader">
+            <button class="Create" type="button" onclick="createarticle()">
+              Create Article
+            </button>
+            <!-- <form action="{% url 'Search' %}" method="POST" class="Search">
+              {% csrf_token %}
+              <input
+                type="text"
+                name="search"
+                id="search"
+                placeholder="Search articles by title"
+              />
+            </form> -->
+            <a href="{% url 'Bloghome' %}"
+              ><button type="button">Feed</button></a
+            >
+            {% if Article %}
+            <a
+              ><button type="button" onclick="deleteall()">
+                Delete All
+              </button></a
+            >
+            <a href="{% url 'Sortmine' %}"
+              ><button type="button">Sort</button></a
+            >
+            {% endif %}
+            <div class="delete">
+              <span>Confirm Deletion</span>
+              <p>Articles selected ({{Article.count}})</p>
+              <a href="{% url 'Deleteall'  %}"
+                ><button type="button">Delete</button></a
+              >
+              <button type="button" onclick="closepop()">Cancel</button>
+            </div>
+          </div>
+          <hr />
+          <p class="Message">
+            {{Message}} <a href="{% url 'Myarticles' %}">{{Click}}</a>
+          </p>
+          {% if Article %} {% for i in Article %}
+          <div class="Article">
+            <section>
+              <p class="title" id="title-{{i.id}}">
+                <b>{{i.title}}</b
+                ><small>
+                  -- ({{i.date | date:"j/m/y"}}, {{i.date | time}})</small
+                >
+              </p>
+              <div class="Share" id="Share-{{i.id}}">
+                <svg
+                  width="17"
+                  title="Share"
+                  id="http://127.0.0.1:8000/Detail/{{i.id}}"
+                  onclick="Copy(this)"
+                  height="18"
+                  viewBox="0 0 17 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 9C0 10.654 1.346 12 3 12C3.794 12 4.512 11.685 5.049 11.18L11.04 14.604C11.022 14.734 11 14.864 11 15C11 16.654 12.346 18 14 18C15.654 18 17 16.654 17 15C17 13.346 15.654 12 14 12C13.206 12 12.488 12.315 11.951 12.82L5.96 9.397C5.978 9.266 6 9.136 6 9C6 8.864 5.978 8.734 5.96 8.603L11.951 5.18C12.488 5.685 13.206 6 14 6C15.654 6 17 4.654 17 3C17 1.346 15.654 0 14 0C12.346 0 11 1.346 11 3C11 3.136 11.022 3.266 11.04 3.397L5.049 6.82C4.496 6.29468 3.76273 6.00123 3 6C1.346 6 0 7.346 0 9Z"
+                    fill="#7D7D7D"
+                  />
+                </svg>
+                <a title="Edit" href="{% url 'Updatepost' i.id %}">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3.42085 19.58C3.42109 19.7187 3.4502 19.8559 3.50632 19.9828C3.56244 20.1097 3.64436 20.2235 3.74685 20.317C3.84847 20.4122 3.96907 20.4848 4.10073 20.5302C4.2324 20.5755 4.37216 20.5925 4.51085 20.58L7.20485 20.335L18.5189 9.017L14.9829 5.47999L3.66985 16.795L3.42485 19.489C3.42206 19.5192 3.42073 19.5496 3.42085 19.58V19.58ZM15.6899 4.774L19.2259 8.31L21.3469 6.18899C21.4398 6.09612 21.5136 5.98583 21.5639 5.86444C21.6142 5.74304 21.6401 5.61291 21.6401 5.4815C21.6401 5.35008 21.6142 5.21995 21.5639 5.09856C21.5136 4.97716 21.4398 4.86687 21.3469 4.774L19.2259 2.65299C19.133 2.56002 19.0227 2.48626 18.9013 2.43593C18.7799 2.38561 18.6498 2.35971 18.5184 2.35971C18.3869 2.35971 18.2568 2.38561 18.1354 2.43593C18.014 2.48626 17.9037 2.56002 17.8109 2.65299L15.6909 4.773L15.6899 4.774V4.774Z"
+                      fill="#7D7D7D"
+                    />
+                  </svg>
+                </a>
+                <a title="Delete" href="{% url 'Deletepost' i.id %}">
+                  <svg
+                    width="15"
+                    height="21"
+                    viewBox="0 0 25 31"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M2.5 9.875V28.625C2.5 29.6562 3.34375 30.5 4.375 30.5H21.25C22.2812 30.5 23.125 29.6562 23.125 28.625V9.875H2.5ZM8.125 26.75H6.25V13.625H8.125V26.75ZM11.875 26.75H10V13.625H11.875V26.75ZM15.625 26.75H13.75V13.625H15.625V26.75ZM19.375 26.75H17.5V13.625H19.375V26.75ZM23.5938 4.25H17.5V1.90625C17.4985 1.53375 17.3499 1.17692 17.0865 0.913517C16.8231 0.650115 16.4663 0.501481 16.0938 0.5L9.53125 0.5C9.15875 0.501481 8.80192 0.650115 8.53852 0.913517C8.27511 1.17692 8.12648 1.53375 8.125 1.90625V4.25H2.03125C1.65859 4.25099 1.30148 4.39947 1.03797 4.66297C0.774466 4.92648 0.62599 5.28359 0.625 5.65625V8H25V5.65625C24.999 5.28359 24.8505 4.92648 24.587 4.66297C24.3235 4.39947 23.9664 4.25099 23.5938 4.25ZM15.625 4.25H10V2.39937H15.625V4.25Z"
+                      fill="#7D7D7D"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </section>
+            <div class="desc">
+              <p>{{i.desc}}</p>
+              {% if i.pic %}
+              <img src="{{i.pic.url}}" alt="pic" />
+              {% endif %}
+            </div>
+            {% if i.desc|length > 300 or i.pic %}
+            <div class="Articlefooter">
+              <p>
+                <a href="{% url 'Detail' i.id %}">Show full article</a>
+              </p>
+            </div>
+            {% endif %}
+          </div>
+          {% endfor %} {% else %}
+          <p>No articles here🥲</p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="createarticle">
+        <svg
+          onclick="closee()"
+          class="close"
+          viewBox="0 0 40 40"
+          fill="#000000"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M1.1182 1.1182C1.8344 0.402216 2.80564 0 3.81835 0C4.83105 0 5.8023 0.402216 6.5185 1.1182L20.0231 14.6228L33.5276 1.1182C34.2479 0.422508 35.2127 0.0375575 36.214 0.0462592C37.2154 0.0549608 38.1733 0.456618 38.8814 1.16472C39.5895 1.87283 39.9912 2.83072 39.9999 3.83209C40.0086 4.83346 39.6236 5.79819 38.9279 6.5185L25.4234 20.0231L38.9279 33.5276C39.6236 34.2479 40.0086 35.2127 39.9999 36.214C39.9912 37.2154 39.5895 38.1733 38.8814 38.8814C38.1733 39.5895 37.2154 39.9912 36.214 39.9999C35.2127 40.0086 34.2479 39.6236 33.5276 38.9279L20.0231 25.4234L6.5185 38.9279C5.79819 39.6236 4.83346 40.0086 3.83209 39.9999C2.83072 39.9912 1.87283 39.5895 1.16472 38.8814C0.456618 38.1733 0.0549608 37.2154 0.0462592 36.214C0.0375575 35.2127 0.422508 34.2479 1.1182 33.5276L14.6228 20.0231L1.1182 6.5185C0.402216 5.8023 0 4.83105 0 3.81835C0 2.80564 0.402216 1.8344 1.1182 1.1182Z"
+            fill="#00000"
+          />
+        </svg>
+        <p>Creating an Article</p>
+        <form
+          action="{% url 'Createpost' %}"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          {% csrf_token %}
+          <label for="title">Title</label>
+          <input
+            id="title"
+            type="text"
+            minlength="20"
+            maxlength="100"
+            name="Posttitle"
+            required
+            placeholder="Should be between 10 to 30 words"
+          />
+          <label for="desc">Description</label>
+          <textarea
+            id="desc"
+            cols="60vw"
+            name="Postdes"
+            rows="5"
+            maxlength="1000"
+            required
+            placeholder="Maximum 1000 characters"
+          ></textarea>
+          <label for="pic">Attach a photo</label>
+          <input type="file" name="Pic" id="pic" />
+          <p class="Hint">You can attach only 1 image</p>
+          <br />
+          <button type="submit">Post</button>
+        </form>
+      </div>
+      <a class="Totop" title="Back to top" href="#Top">
+        <svg
+          width="16"
+          height="18"
+          viewBox="0 0 16 18"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M8 17V1M1 8L8 1L15 8"
+            stroke="#363636"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </a>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'Css/Landingpage.css' %}" />
+    <link
+      rel="shortcut icon"
+      href="{% static '/Images/Fav.png' %}"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="{% static '/Css/Profile.css' %}" />
+    <script src="{% static 'js/Profile.js' %}" defer></script>
+    <title>We Blog | Profile</title>
+  </head>
+  <body>
+    <header>
+      <a href="/"><span>We Blog</span></a>
+      <ul>
+        <a href="{% url 'Bloghome' %}">
+          <li>Home</li>
+        </a>
+        <a href="{% url 'Logout' %}">
+          <li>Logout</li>
+        </a>
+      </ul>
+    </header>
+    <div class="profile">
+      <form
+        class="Profileform"
+        action="{% url 'Updateprofile' %}"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        {% csrf_token %}
+        <h1>Profile</h1>
+        <label for="pic">Change profile picture</label>
+        <input type="file" name="Pic" />
+        <label for="email">Change email</label>
+        <input
+          type="email"
+          id="Email"
+          name="Email"
+          pattern="(?=.*[a-z])[a-z0-9-.]+@[a-z]+\.[a-z]{2,}"
+          placeholder="example@gmail.com"
+        />
+        <p class="Hint">Please enter a valid email</p>
+        <label for="username">Change username</label>
+        <input
+          type="text"
+          name="Username"
+          id="Username"
+          title="Username sould only contain Capital and small letters not numbers or symbols"
+          pattern="[A-Z]+[a-z]{4,}"
+          placeholder="Kevin"
+        />
+        <p class="Hint">
+          Username should start with capital letter & <br />
+          atleast 5 charactes long. No numbers & symbols
+        </p>
+        <label for="password">Change password</label>
+        <input
+          type="password"
+          name="Password"
+          pattern="(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z])(?=.*[!@#$%^&*=])[a-zA-Z0-9!@#$%^&*()=]{10,}"
+          id="Password"
+          placeholder="**************"
+        />
+        <p class="Hint">
+          Passwords must be at least 8 characters long and <br />
+          include at least one uppercase, symbol, number.
+        </p>
+        <p class="Show" onclick="Show(this)">Show password</p>
+        <button type="submit">Save</button>
+        {% if messages %} {% for i in messages %}
+        <p class="Sucmessage">{{i}}</p>
+        {% endfor %} {% endif %}
+      </form>
+      <section class="card">
+        <div>
+          <div class="Profileimg">
+            {% if not user.profile.pic == 'Defaultprofilepic.jpg' %}
+            <a href="{% url 'Removepicture' %}" title="Remove profile picture">
+              <svg
+                class="remove"
+                viewBox="0 0 40 40"
+                fill="#000000"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1.1182 1.1182C1.8344 0.402216 2.80564 0 3.81835 0C4.83105 0 5.8023 0.402216 6.5185 1.1182L20.0231 14.6228L33.5276 1.1182C34.2479 0.422508 35.2127 0.0375575 36.214 0.0462592C37.2154 0.0549608 38.1733 0.456618 38.8814 1.16472C39.5895 1.87283 39.9912 2.83072 39.9999 3.83209C40.0086 4.83346 39.6236 5.79819 38.9279 6.5185L25.4234 20.0231L38.9279 33.5276C39.6236 34.2479 40.0086 35.2127 39.9999 36.214C39.9912 37.2154 39.5895 38.1733 38.8814 38.8814C38.1733 39.5895 37.2154 39.9912 36.214 39.9999C35.2127 40.0086 34.2479 39.6236 33.5276 38.9279L20.0231 25.4234L6.5185 38.9279C5.79819 39.6236 4.83346 40.0086 3.83209 39.9999C2.83072 39.9912 1.87283 39.5895 1.16472 38.8814C0.456618 38.1733 0.0549608 37.2154 0.0462592 36.214C0.0375575 35.2127 0.422508 34.2479 1.1182 33.5276L14.6228 20.0231L1.1182 6.5185C0.402216 5.8023 0 4.83105 0 3.81835C0 2.80564 0.402216 1.8344 1.1182 1.1182Z"
+                  fill="#00000"
+                />
+              </svg>
+              {% endif %}
+            </a>
+            <img
+              onclick="Showprofilepic()"
+              src="{{user.profile.pic.url}}"
+              alt="Profilepic"
+            />
+          </div>
+          <div class="Profilepicdiv">
+            <svg
+              onclick="Closeimg()"
+              class="close"
+              viewBox="0 0 40 40"
+              fill="#000000"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.1182 1.1182C1.8344 0.402216 2.80564 0 3.81835 0C4.83105 0 5.8023 0.402216 6.5185 1.1182L20.0231 14.6228L33.5276 1.1182C34.2479 0.422508 35.2127 0.0375575 36.214 0.0462592C37.2154 0.0549608 38.1733 0.456618 38.8814 1.16472C39.5895 1.87283 39.9912 2.83072 39.9999 3.83209C40.0086 4.83346 39.6236 5.79819 38.9279 6.5185L25.4234 20.0231L38.9279 33.5276C39.6236 34.2479 40.0086 35.2127 39.9999 36.214C39.9912 37.2154 39.5895 38.1733 38.8814 38.8814C38.1733 39.5895 37.2154 39.9912 36.214 39.9999C35.2127 40.0086 34.2479 39.6236 33.5276 38.9279L20.0231 25.4234L6.5185 38.9279C5.79819 39.6236 4.83346 40.0086 3.83209 39.9999C2.83072 39.9912 1.87283 39.5895 1.16472 38.8814C0.456618 38.1733 0.0549608 37.2154 0.0462592 36.214C0.0375575 35.2127 0.422508 34.2479 1.1182 33.5276L14.6228 20.0231L1.1182 6.5185C0.402216 5.8023 0 4.83105 0 3.81835C0 2.80564 0.402216 1.8344 1.1182 1.1182Z"
+                fill="#00000"
+              />
+            </svg>
+            <img class="Add" src="{{user.profile.pic.url}}" alt="Profilepic" />
+          </div>
+          <p>{{user.username}}</p>
+        </div>
+        <p>{{user.email}}</p>
+      </section>
+    </div>
+  </body>
+</html>

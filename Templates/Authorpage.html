@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static '/Css/Landingpage.css' %}" />
+    <link rel="shortcut icon" href="{% static '/Images/Fav.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static '/Css/Home.css' %}" />
+    <script src="{% static 'js/Home.js' %}"></script>
+    <title>We Blog | {{Article.1}}</title>
+  </head>
+  <body>
+    <header>
+      <a href="/"><span>We Blog</span></a>
+      <ul>
+        <a class="nohover" href="{% url 'Profile' %}"
+          ><img src="{{user.profile.pic.url}}" alt="Profile"
+        /></a>
+        <a href="{% url 'Bloghome' %}">
+          <li>Home</li>
+        </a>
+        <a href="{% url 'Logout' %}">
+          <li>Logout</li>
+        </a>
+      </ul>
+    </header>
+    <div class="Main">
+      <div class="Welcome">
+        <h1>Articles of {{Article.1.username}}</h1>
+        <br />
+      </div>
+      <div class="Articlecontainer">
+        <div class="oneside">
+          <div class="Articleheader">
+            <a href="{% url 'Bloghome' %}"
+              ><button type="button">Feed</button></a
+            >
+          </div>
+          <hr />
+          {% if Article.0 %} {% for i in Article.0 %}
+          <div class="Article">
+            <section>
+              <p class="title">
+                <b>{{i.title}}</b> --
+                <small>({{i.date | date:"j/m/y"}})</small>
+              </p>
+              <img src="{{i.user.profile.pic.url}}" alt="Profilepic" />
+            </section>
+            <div class="desc">
+              <p>{{i.desc}}</p>
+            </div>
+            {% if i.desc|length > 300 or i.pic %}
+            <div class="Articlefooter">
+              <p>
+                <a href="{% url 'Detail' i.id %}">Show full article</a>
+              </p>
+            </div>
+            {% endif %}
+          </div>
+          {% endfor %} {% else %}
+          <p>No articles here🥲</p>
+          {% endif %}
+        </div>
+        <div class="Otherside">
+          <h2>{{Article.1}}'s profile</h2>
+          <br />
+          <p>Username -- {{Article.1.username}}</p>
+          <br />
+          <p>Articles created -- {{Article.0.count}}</p>
+          <br />
+          <p>Joined on -- {{Article.1.date_joined | date:"j/m/Y"}}</p>
+          <br />
+          <p>Email -- {{Article.1.email}}</p>
+          <br />
+          <p>Have access to database -- {{Article.1.is_superuser}}</p>
+        </div>
+      </div>
+      <a class="Totop" title="Back to top" href="#Top">
+        <svg
+          width="16"
+          height="18"
+          viewBox="0 0 16 18"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M8 17V1M1 8L8 1L15 8"
+            stroke="#363636"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </a>
+    </div>
+  </body>
+</html>

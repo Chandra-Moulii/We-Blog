@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static '/Css/Landingpage.css' %}" />
+    <link rel="shortcut icon" href="{% static '/Images/Fav.png' %}" type="image/x-icon">
+
+    <link rel="stylesheet" href="{% static '/Css/Signup.css' %}" />
+    <script src="{% static '/js/gsap.min.js' %}" defer></script>
+    <script src="{% static '/js/Landingpage.js' %}" defer></script>
+    <title>We Blog | Signup</title>
+  </head>
+  <body>
+    <header>
+      <a href="/"><span>We Blog</span></a>
+      <ul>
+        <a href="{% url 'Bloghome' %}">
+          <li>Home</li>
+        </a>
+      </ul>
+    </header>
+    <h1>Signup to create and read articles</h1>
+    <div class="Signup">
+      <form action="{% url 'Signup' %}" method="POST">
+        {% csrf_token %}
+        <label for="Username">Username</label>
+        <input
+          id="Username"
+          pattern="[A-Z]+[a-z]{4,}"
+          name="Username"
+          type="text"
+          required
+          placeholder="Jhondoe"
+        />
+        <p class="Hint">
+          Username should start with capital letter & <br />
+          atleast 5 charactes long. No numbers & symbols
+        </p>
+        <label for="Email">Email</label>
+        <input
+          id="Email"
+          pattern="(?=.*[a-z])[a-z0-9-.]+@[a-z]+\.[a-z]{2,}"
+          type="email"
+          name="Emai"
+          required
+          placeholder="jhon@gmail.com"
+        />
+        <p class="Hint">Please enter a valid email</p>
+        <label for="Password">Password</label>
+        <input
+          id="Password"
+          type="password"
+          name="Password"
+          required
+          title="Password must contain uppercase, symbol, digit and atleast 8 characters long"
+          pattern="(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z])(?=.*[!@#$%^&*=])[a-zA-Z0-9!@#$%^&*()=]{10,}"
+          placeholder="**************"
+        />
+        <p class="Hint">
+          Passwords must be at least 8 characters long and <br />
+          include at least one uppercase, symbol, and number.
+          <p class="Show" onclick="Show(this)">Show password</p>
+        </p>
+        <label for="Confirmpassword">Confirm Password </label>
+        <input
+          id="Confirmpassword"
+          type="password"
+          name="Confirmpassword"
+          required
+          placeholder="**************"
+        />
+        <p class="Error">{{message}}</p>
+        <button type="submit">Signup</button>
+        <p>
+          Already have an account ? <a href="{% url 'Landingpage' %}">Login</a>
+        </p>
+      </form>
+    </div>
+  </body>
+</html>
